@@ -30,7 +30,7 @@ if [ -d "squashfs-root" ]; then
 
   echo -e "\nInstalled successfully!\n"
 
-    # Cleanup
+  # Cleanup
   rm -rf LM-Studio-*
   exit 1
 else

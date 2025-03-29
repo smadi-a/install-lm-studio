@@ -8,4 +8,7 @@ $ ./install.sh
 ```
 
 ## Limitations
-This will only work to get the latest Linux x64 image (the script can me modified to target other versions)
+This will only work to get the latest Linux x64 image (the script can be modified to target other versions)
+
+## More ideas
+* Add a Gnome app entry
