@@ -29,9 +29,6 @@ if [ -d "squashfs-root" ]; then
   sudo mv squashfs-root /usr/local/lm-studio && sudo chown root:root /usr/local/lm-studio/chrome-sandbox && sudo chmod 4755 /usr/local/lm-studio/chrome-sandbox
 
   echo -e "\nInstalled successfully!\n"
-
-  # Cleanup
-  rm -rf LM-Studio-*
   exit 1
 else
   echo -e "\nCould not extract contents\n"
