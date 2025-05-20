@@ -1,14 +1,36 @@
 #!/bin/bash
 
 echo -e "Fetching latest version info..\n"
-response=$(curl -s https://lmstudio.ai/blog)
+response=$(curl -s https://lmstudio.ai/download)
 
-version=$(echo "$response" | grep -oP 'lmstudio-v\K[^"]+' | head -n 1)
+data_prefix="${response%%versionsData*}"
+data_index=${#data_prefix}
+data_extract="${response:$data_index+10:100}"
+
+version_prefix="${data_extract%%version*}"
+version_index=${#version_prefix}
+version_extracted="${data_extract:$version_index:25}"
+
+version_number_prefix="${version_extracted%%'version\":\"'*}"
+version_number_index=${#version_number_prefix}
+version_number_extracted="${version_extracted:$version_number_index+12:10}"
+version_number=$(echo "$version_number_extracted" | tr -cd '0-9.')
+
+build_prefix="${data_extract%%build*}"
+build_index=${#build_prefix}
+build_extracted="${data_extract:$build_index:20}"
+
+build_number_prefix="${build_extracted%%'build\":\"'*}"
+build_number_index=${#build_number_prefix}
+build_number_extracted="${build_extracted:$build_number_index+10:10}"
+build_number=$(echo "$build_number_extracted" | tr -cd '0-9.')
+
+version="$version_number-$build_number"
 
 if [ -n "$version" ]; then
   echo -e "Downloading version $version\n"
 
-  wget -c "https://installers.lmstudio.ai/linux/x64/$version-5/LM-Studio-$version-5-x64.AppImage"
+  wget -c "https://installers.lmstudio.ai/linux/x64/$version/LM-Studio-$version-x64.AppImage"
 else
   echo -e "\nUnable to get latest version info\n"
   exit 1
